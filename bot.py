@@ -18,6 +18,11 @@ class Bot(commands.Bot):
     async def on_ready(self):
         print(f'Logged on as {self.user} (ID: {self.user.id})')
 
+
+intents = discord.Intents.default()
+intents.message_content = True
+bot = Bot(intents=intents)
+
 # write general commands here
 @bot.command()
 async def ping(ctx):
@@ -50,8 +55,6 @@ async def on_message(message):
             await message.reply(f"{message.author.mention} Please watch your language")
             await message.delete()
 
-intents = discord.Intents.default()
-intents.message_content = True
-bot = Bot(intents=intents)
+    await bot.process_commands(message)
 
 bot.run(config.token)
