@@ -24,6 +24,32 @@ async def ping(ctx):
     await ctx.send("Pong :ping_pong:")
     # await ctx.send(f"`{round(bot.latency * 1000)}ms`")
 
+@bot.event
+async def on_message(message):
+    """
+    Filter banned words
+    """
+
+    banned_words_wildcard = [
+        "sex",
+        "fuck",
+    ]
+
+    for word in banned_words_wildcard:
+        if word.lower() in message.content.lower():
+            await message.reply(f"{message.author.mention} Please watch your language")
+            await message.delete()
+
+    banned_words_exact = [
+        "noice",
+        "bruh",
+    ]
+
+    for word in message.content.lower().split(" "):
+        if word.lower() in banned_words_exact:
+            await message.reply(f"{message.author.mention} Please watch your language")
+            await message.delete()
+
 intents = discord.Intents.default()
 intents.message_content = True
 bot = Bot(intents=intents)
