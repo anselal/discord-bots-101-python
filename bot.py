@@ -18,6 +18,11 @@ class Bot(commands.Bot):
     async def on_ready(self):
         print(f'Logged on as {self.user} (ID: {self.user.id})')
 
+# write general commands here
+@bot.command()
+async def ping(ctx):
+    await ctx.send("Pong :ping_pong:")
+    # await ctx.send(f"`{round(bot.latency * 1000)}ms`")
 
 intents = discord.Intents.default()
 intents.message_content = True
