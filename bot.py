@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from discord import app_commands
 from discord.ext import commands
 import discord
 import config
@@ -28,6 +29,17 @@ bot = Bot(intents=intents)
 async def ping(ctx):
     await ctx.send("Pong :ping_pong:")
     # await ctx.send(f"`{round(bot.latency * 1000)}ms`")
+
+@bot.command()
+async def sync(ctx):
+    await bot.tree.sync()
+    await ctx.send("Slash commands synced")
+
+@bot.tree.command()
+@app_commands.describe(name="Enter your name, default is Master")
+async def hello(interaction, name: str = "Master"):
+    """Simple hello command"""
+    await interaction.response.send_message(f"Hello, {name}")
 
 @bot.event
 async def on_message(message):
